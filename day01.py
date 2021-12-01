@@ -1,36 +1,27 @@
-from common import read_input
+from typing import List, Tuple
+
+from common import count_by, read_input_lines
 
 
-def part1(input: str) -> int:
-    ns = [int(n) for n in input.splitlines()]
-    pairs = zip(ns, ns[1:])
-
-    increments = 0
-    for a, b in pairs:
-        if a < b:
-            increments += 1
-
-    return increments
+def _is_increasing(t: Tuple[int, int]) -> bool:
+    return t[0] < t[1]
 
 
-def part2(input: str) -> int:
-    ns = [int(n) for n in input.splitlines()]
-    chunks = []
+count_increasing_pairs = count_by(_is_increasing)
 
-    for i in range(len(ns)):
-        chunks.append(sum(ns[i : i + 3]))
 
-    pairs = zip(chunks, chunks[1:])
+def part1(input: List[int]) -> int:
+    pairs = zip(input, input[1:])
+    return count_increasing_pairs(pairs)
 
-    increments = 0
-    for a, b in pairs:
-        if a < b:
-            increments += 1
 
-    return increments
+def part2(input: List[int]) -> int:
+    window_sums = [sum(chunk) for chunk in zip(input, input[1:], input[2:])]
+    pairs = zip(window_sums, window_sums[1:])
+    return count_increasing_pairs(pairs)
 
 
 if __name__ == "__main__":
-    data_in = read_input(1)
+    data_in = read_input_lines(1, lambda x: int(x))
     print(part1(data_in))
     print(part2(data_in))
