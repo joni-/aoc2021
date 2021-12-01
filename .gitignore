@@ -140,3 +140,4 @@ cython_debug/
 *.db
 
 .cookie
+inputs/test.in
