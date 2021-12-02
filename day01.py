@@ -20,6 +20,6 @@ def part2(input: list[int]) -> int:
 
 
 if __name__ == "__main__":
-    data_in = read_input_lines(1, lambda x: int(x))
+    data_in = read_input_lines(1, int)
     print(part1(data_in))
     print(part2(data_in))
