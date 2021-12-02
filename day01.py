@@ -1,21 +1,19 @@
-from typing import List, Tuple
-
 from common import count_by, read_input_lines
 
 
-def _is_increasing(t: Tuple[int, int]) -> bool:
+def _is_increasing(t: tuple[int, int]) -> bool:
     return t[0] < t[1]
 
 
 count_increasing_pairs = count_by(_is_increasing)
 
 
-def part1(input: List[int]) -> int:
+def part1(input: list[int]) -> int:
     pairs = zip(input, input[1:])
     return count_increasing_pairs(pairs)
 
 
-def part2(input: List[int]) -> int:
+def part2(input: list[int]) -> int:
     window_sums = [sum(chunk) for chunk in zip(input, input[1:], input[2:])]
     pairs = zip(window_sums, window_sums[1:])
     return count_increasing_pairs(pairs)

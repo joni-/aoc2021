@@ -1,7 +1,7 @@
 import os
 import sys
 from collections.abc import Iterator
-from typing import Callable, List, TypeVar
+from typing import Callable, TypeVar
 
 T = TypeVar("T")
 
@@ -27,5 +27,5 @@ def read_input(day: int) -> str:
     return open(path, "r").read()
 
 
-def read_input_lines(day: int, mapper: Callable[[str], T]) -> List[T]:
+def read_input_lines(day: int, mapper: Callable[[str], T]) -> list[T]:
     return [mapper(x) for x in read_input(day).splitlines()]

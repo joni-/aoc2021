@@ -1,14 +1,12 @@
-from typing import List, Tuple
-
 from common import read_input_lines
 
 
-def _get_direction(instruction: str) -> Tuple[str, int]:
+def _get_direction(instruction: str) -> tuple[str, int]:
     direction, step_size = instruction.split(" ")
     return direction, int(step_size)
 
 
-def part1(input: List[str]) -> int:
+def part1(input: list[str]) -> int:
     x, y = 0, 0
     steps = [_get_direction(step) for step in input]
 
@@ -23,7 +21,7 @@ def part1(input: List[str]) -> int:
     return x * y
 
 
-def part2(input: List[str]) -> int:
+def part2(input: list[str]) -> int:
     x, y, aim = 0, 0, 0
     steps = [_get_direction(step) for step in input]
 
