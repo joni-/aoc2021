@@ -1,13 +1,15 @@
 import os
 import sys
 from collections.abc import Iterator
-from typing import Callable, TypeVar
+from typing import Callable, TypeVar, Union
 
 T = TypeVar("T")
 
 
-def count_by(pred: Callable[[T], bool]) -> Callable[[Iterator[T]], int]:
-    def counter(seq: Iterator[T]) -> int:
+def count_by(
+    pred: Callable[[Union[T, str]], bool]
+) -> Callable[[Union[Iterator[T], str]], int]:
+    def counter(seq: Union[Iterator[T], str]) -> int:
         count = 0
         for x in seq:
             if pred(x):
