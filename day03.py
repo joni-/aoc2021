@@ -1,6 +1,6 @@
 from typing import Callable
 
-from common import count_by, read_input_lines
+from common import count_by, read_input_lines, transpose
 
 
 def _is_one(c: str) -> bool:
@@ -10,24 +10,8 @@ def _is_one(c: str) -> bool:
 count_ones = count_by(_is_one)
 
 
-def _columnize(data: list[str]) -> list[str]:
-    if not data:
-        return []
-
-    width = len(data[0])
-    output: list[str] = []
-
-    for col in range(width):
-        res = ""
-        for row in data:
-            res += row[col]
-        output.append(res)
-
-    return output
-
-
 def part1(input: list[str]) -> int:
-    columns = _columnize(input)
+    columns: list[str] = transpose(input)  # type: ignore
     size = len(input)
     gamma = ""
     epsilon = ""
@@ -49,7 +33,7 @@ def part2(input: list[str]) -> int:
 
 def _get_rating(input: list[str], bit_criteria: Callable[[int, int], str]) -> str:
     for position in range(len(input[0])):
-        columns = _columnize(input)
+        columns: list[str] = transpose(input)  # type: ignore
         bits = columns[position]
         ones = count_ones(bits)
         zeros = len(bits) - ones

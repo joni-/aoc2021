@@ -1,4 +1,4 @@
-from common import read_input
+from common import read_input, transpose
 
 
 class Board:
@@ -15,7 +15,7 @@ class Board:
                 self.numbers[n] = False
             self.lines.append(row)
 
-        for col in [*zip(*numbers)]:
+        for col in transpose(numbers):
             self.lines.append(list(col))
 
     def play(self, number: int) -> "Board":

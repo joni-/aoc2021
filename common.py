@@ -19,6 +19,11 @@ def count_by(
     return counter
 
 
+def transpose(lst: list[list[T]]) -> list[list[T]]:
+    transposed = [*zip(*lst)]  # https://stackoverflow.com/a/11387441/586301
+    return [list(x) for x in transposed]
+
+
 def read_input(day: int) -> str:
     input_file = "day" + str(day).zfill(2) + ".in"
     path = (
