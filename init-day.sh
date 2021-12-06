@@ -8,5 +8,5 @@ then
     exit 1
 fi
 
-./fetch.sh $day
 ./copy-files.sh $day
+./fetch.sh $day

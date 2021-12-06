@@ -37,7 +37,11 @@ def part2(input: list[str]) -> int:
     return x * y
 
 
+def parse(*, example: bool = False) -> list[str]:
+    return read_input_lines(2, lambda x: x, example=example)
+
+
 if __name__ == "__main__":
-    data_in = read_input_lines(2, lambda x: x)
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

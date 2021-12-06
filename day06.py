@@ -28,7 +28,11 @@ def part2(input: list[int]) -> int:
     return _count_fishes(input, 256)
 
 
+def parse(*, example: bool = False) -> list[int]:
+    return [int(x) for x in read_input(6, example=example).split(",")]
+
+
 if __name__ == "__main__":
-    data_in = [int(x) for x in read_input(6).split(",")]
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

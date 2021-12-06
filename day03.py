@@ -55,7 +55,11 @@ def _bit_criteria_co2_sr(ones: int, zeros: int) -> str:
     return "0" if ones >= zeros else "1"
 
 
+def parse(*, example: bool = False) -> list[str]:
+    return read_input_lines(3, str, example=example)
+
+
 if __name__ == "__main__":
-    data_in = read_input_lines(3, str)
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

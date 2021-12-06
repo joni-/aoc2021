@@ -1,24 +1,12 @@
-from day03 import part1, part2
-
-input = [
-    "00100",
-    "11110",
-    "10110",
-    "10111",
-    "10101",
-    "01111",
-    "00111",
-    "11100",
-    "10000",
-    "11001",
-    "00010",
-    "01010",
-]
+import pytest
+from day03 import parse, part1, part2
 
 
-def test_day03_part1():
-    assert part1(input) == 198
+@pytest.mark.parametrize("example, expected", [(True, 198), (False, 3882564)])
+def test_day03_part1(example: bool, expected: int):
+    assert part1(parse(example=example)) == expected
 
 
-def test_day03_part2():
-    assert part2(input) == 230
+@pytest.mark.parametrize("example, expected", [(True, 230), (False, 3385170)])
+def test_day03_part2(example: bool, expected: int):
+    assert part2(parse(example=example)) == expected

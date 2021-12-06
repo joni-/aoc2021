@@ -8,8 +8,11 @@ def part1(input: list[str]) -> int:
 def part2(input: list[str]) -> int:
     return 0
 
+def parse(*, example: bool = False) -> list[str]:
+    return read_input_lines(XXX, str, example=example)
+
 
 if __name__ == "__main__":
-    data_in = read_input_lines(XXX, str)
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

@@ -85,7 +85,11 @@ def _draw(lines: list[tuple[Point, Point]], counts: dict[Point, int]):
         print(row)
 
 
+def parse(*, example: bool = False) -> list[str]:
+    return read_input_lines(5, str, example=example)
+
+
 if __name__ == "__main__":
-    data_in = read_input_lines(5, str)
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

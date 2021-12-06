@@ -10,3 +10,5 @@ fi
 
 cat day.template | sed -E "s/XXX/$day/g" > day$(printf "%02d" $day).py
 cat tests/test.template | sed -E s/XXX/day$(printf "%02d" $day)/g > tests/test_day$(printf "%02d" $day).py
+touch inputs/day$(printf "%02d" $day).example.in
+touch inputs/day$(printf "%02d" $day).in

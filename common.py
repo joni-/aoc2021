@@ -24,15 +24,17 @@ def transpose(lst: list[list[T]]) -> list[list[T]]:
     return [list(x) for x in transposed]
 
 
-def read_input(day: int) -> str:
-    input_file = "day" + str(day).zfill(2) + ".in"
+def read_input(day: int, *, example: bool = False) -> str:
+    input_file = "day" + str(day).zfill(2) + (".example" if example else "") + ".in"
     path = (
         sys.argv[1]
-        if len(sys.argv) > 1
+        if len(sys.argv) > 1 and os.path.exists(sys.argv[1])
         else os.path.join(os.path.dirname(__file__), "inputs", input_file)
     )
     return open(path, "r").read()
 
 
-def read_input_lines(day: int, mapper: Callable[[str], T]) -> list[T]:
-    return [mapper(x) for x in read_input(day).splitlines()]
+def read_input_lines(
+    day: int, mapper: Callable[[str], T], *, example: bool = False
+) -> list[T]:
+    return [mapper(x) for x in read_input(day, example=example).splitlines()]

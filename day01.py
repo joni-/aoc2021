@@ -19,7 +19,11 @@ def part2(input: list[int]) -> int:
     return count_increasing_pairs(pairs)
 
 
+def parse(*, example: bool = False) -> list[int]:
+    return read_input_lines(1, int, example=example)
+
+
 if __name__ == "__main__":
-    data_in = read_input_lines(1, int)
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

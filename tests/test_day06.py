@@ -1,11 +1,14 @@
-from day06 import part1, part2
-
-input = [3, 4, 3, 1, 2]
-
-
-def test_day06_part1():
-    assert part1(input) == 5934
+import pytest
+from day06 import parse, part1, part2
 
 
-def test_day06_part2():
-    assert part2(input) == 26984457539
+@pytest.mark.parametrize("example, expected", [(True, 5934), (False, 391671)])
+def test_day06_part1(example: bool, expected: int):
+    assert part1(parse(example=example)) == expected
+
+
+@pytest.mark.parametrize(
+    "example, expected", [(True, 26984457539), (False, 1754000560399)]
+)
+def test_day06_part2(example: bool, expected: int):
+    assert part2(parse(example=example)) == expected

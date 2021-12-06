@@ -73,7 +73,11 @@ def part2(input: str) -> int:
     return drawn_last * sum(losing_board.unmarked())
 
 
+def parse(*, example: bool = False) -> str:
+    return read_input(4, example=example)
+
+
 if __name__ == "__main__":
-    data_in = read_input(4)
+    data_in = parse()
     print(part1(data_in))
     print(part2(data_in))

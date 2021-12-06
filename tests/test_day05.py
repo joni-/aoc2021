@@ -1,22 +1,12 @@
-from day05 import part1, part2
-
-input = [
-    "0,9 -> 5,9",
-    "8,0 -> 0,8",
-    "9,4 -> 3,4",
-    "2,2 -> 2,1",
-    "7,0 -> 7,4",
-    "6,4 -> 2,0",
-    "0,9 -> 2,9",
-    "3,4 -> 1,4",
-    "0,0 -> 8,8",
-    "5,5 -> 8,2",
-]
+import pytest
+from day05 import parse, part1, part2
 
 
-def test_day05_part1():
-    assert part1(input) == 5
+@pytest.mark.parametrize("example, expected", [(True, 5), (False, 4745)])
+def test_day05_part1(example: bool, expected: int):
+    assert part1(parse(example=example)) == expected
 
 
-def test_day05_part2():
-    assert part2(input) == 12
+@pytest.mark.parametrize("example, expected", [(True, 12), (False, 18442)])
+def test_day05_part2(example: bool, expected: int):
+    assert part2(parse(example=example)) == expected
