@@ -12,6 +12,10 @@ click==8.0.3
     # via
     #   black
     #   pip-tools
+colorama==0.4.4
+    # via pytest-watch
+docopt==0.6.2
+    # via pytest-watch
 flake8==4.0.1
     # via -r requirements.in
 iniconfig==1.1.1
@@ -47,6 +51,10 @@ pyflakes==2.4.0
 pyparsing==3.0.6
     # via packaging
 pytest==6.2.5
+    # via
+    #   -r requirements.in
+    #   pytest-watch
+pytest-watch==4.2.0
     # via -r requirements.in
 regex==2021.11.10
     # via black
@@ -62,6 +70,8 @@ typing-extensions==4.0.0
     # via
     #   black
     #   mypy
+watchdog==2.1.6
+    # via pytest-watch
 wheel==0.37.0
     # via pip-tools
 
