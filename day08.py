@@ -175,18 +175,15 @@ def part2(input: list[Entry]) -> int:
 
     for entry in input:
         rules = get_rules(entry.patterns)
-        result += int(
-            "".join(
-                [
-                    str(n)
-                    for n in [
-                        rules["".join(sorted(output))] for output in entry.outputs
-                    ]
-                ]
-            )
+        result += _concat(
+            [n for n in [rules["".join(sorted(output))] for output in entry.outputs]]
         )
 
     return result
+
+
+def _concat(numbers: list[int]) -> int:
+    return int("".join([str(n) for n in numbers]))
 
 
 def parse(*, example: bool = False) -> list[Entry]:

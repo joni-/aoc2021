@@ -17,7 +17,7 @@ def count_by(pred: Callable[[T], bool]) -> Callable[[Iterable[T]], int]:
     return counter
 
 
-def transpose(lst: list[list[T]]) -> list[list[T]]:
+def transpose(lst: Grid[T]) -> Grid[T]:
     transposed = [*zip(*lst)]  # https://stackoverflow.com/a/11387441/586301
     return [list(x) for x in transposed]
 

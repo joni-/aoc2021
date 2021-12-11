@@ -11,7 +11,7 @@ def overlaps(item: tuple[Point, int]) -> bool:
     return item[1] >= 2
 
 
-count_overlapping_points = count_by(overlaps)  # type: ignore
+count_overlapping_points = count_by(overlaps)
 
 
 def _parse_lines(input: list[str]) -> list[tuple[Point, Point]]:
