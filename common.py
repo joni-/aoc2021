@@ -1,16 +1,13 @@
 import os
 import sys
-from collections.abc import Iterator
-from typing import Callable, NamedTuple, TypeVar, Union
+from typing import Callable, Iterable, NamedTuple, TypeVar
 
 T = TypeVar("T")
 Grid = list[list[T]]
 
 
-def count_by(
-    pred: Callable[[Union[T, str]], bool]
-) -> Callable[[Union[Iterator[T], str]], int]:
-    def counter(seq: Union[Iterator[T], str]) -> int:
+def count_by(pred: Callable[[T], bool]) -> Callable[[Iterable[T]], int]:
+    def counter(seq: Iterable[T]) -> int:
         count = 0
         for x in seq:
             if pred(x):
