@@ -1,45 +1,4 @@
-from typing import NamedTuple
-
-from common import read_input_lines
-
-ParsedInput = list[list[int]]
-
-
-class Coordinate(NamedTuple):
-    row: int
-    col: int
-
-
-SIZE = 10
-
-
-def _get_neighbor_indexes(coord: Coordinate) -> list[Coordinate]:
-    def _is_valid(c: Coordinate) -> bool:
-        return c.row >= 0 and c.row < SIZE and c.col >= 0 and c.col < SIZE
-
-    top = Coordinate(coord.row - 1, coord.col)
-    top_right = Coordinate(coord.row - 1, coord.col + 1)
-    top_left = Coordinate(coord.row - 1, coord.col - 1)
-    right = Coordinate(coord.row, coord.col + 1)
-    down = Coordinate(coord.row + 1, coord.col)
-    down_right = Coordinate(coord.row + 1, coord.col + 1)
-    down_left = Coordinate(coord.row + 1, coord.col - 1)
-    left = Coordinate(coord.row, coord.col - 1)
-    return [
-        c
-        for c in [top, top_right, top_left, right, down, down_right, down_left, left]
-        if _is_valid(c)
-    ]
-
-
-def _get_neighbors(
-    input: ParsedInput, coord: Coordinate
-) -> list[tuple[Coordinate, int]]:
-    nbs = _get_neighbor_indexes(coord)
-    xs = []
-    for coord in nbs:
-        xs.append((coord, input[coord.row][coord.col]))
-    return xs
+from common import Coordinate, Grid, get_neighbors, read_input_lines
 
 
 def _step(
@@ -71,14 +30,14 @@ def _step(
     return values, len(flashed)
 
 
-def part1(input: ParsedInput) -> int:
+def part1(input: Grid[int]) -> int:
     neighbors: dict[Coordinate, list[Coordinate]] = {}
     values: dict[Coordinate, int] = {}
 
     for i, row in enumerate(input):
         for j, current_value in enumerate(row):
             current_coord = Coordinate(i, j)
-            nbs = _get_neighbors(input, current_coord)
+            nbs = get_neighbors(input, current_coord, include_diagonals=True)
             neighbors[current_coord] = [coord for coord, value in nbs]
             values[current_coord] = current_value
 
@@ -90,14 +49,14 @@ def part1(input: ParsedInput) -> int:
     return flashes
 
 
-def part2(input: ParsedInput) -> int:
+def part2(input: Grid[int]) -> int:
     neighbors: dict[Coordinate, list[Coordinate]] = {}
     values: dict[Coordinate, int] = {}
 
     for i, row in enumerate(input):
         for j, current_value in enumerate(row):
             current_coord = Coordinate(i, j)
-            nbs = _get_neighbors(input, current_coord)
+            nbs = get_neighbors(input, current_coord, include_diagonals=True)
             neighbors[current_coord] = [coord for coord, value in nbs]
             values[current_coord] = current_value
 
@@ -109,7 +68,7 @@ def part2(input: ParsedInput) -> int:
         step += 1
 
 
-def parse(*, example: bool = False) -> ParsedInput:
+def parse(*, example: bool = False) -> Grid[int]:
     lines = read_input_lines(11, str, example=example)
     result: list[list[int]] = []
     for line in lines:
