@@ -1,3 +1,4 @@
+import queue
 from collections import defaultdict
 from typing import Iterable
 
@@ -10,31 +11,35 @@ def _print_grid(grid: Grid[int], path: set[Coord]) -> None:
     for i, row in enumerate(grid):
         for j, col in enumerate(row):
             if (i, j) in path:
-                print("#".ljust(2), end="")
+                print("#".ljust(1), end="")
             else:
-                print(str(col).ljust(2), end="")
+                print("".ljust(1), end="")
         print()
 
 
 def dijkstra(grid: Grid[int]) -> tuple[dict[Coord, int], dict[Coord, Coord]]:
+    pq: queue.Queue[tuple[int, Coord]] = queue.PriorityQueue()
     dist: dict[Coord, int] = defaultdict(int)
     prev: dict[Coord, Coord] = {}
-    q: set[Coord] = set()
+    visited: set[Coord] = set()
 
     for i, row in enumerate(grid):
         for j, col in enumerate(row):
-            dist[(i, j)] = 100000000000
-            q.add((i, j))
+            v = (i, j)
+            if (i, j) != (0, 0):
+                dist[v] = 10000000000000
+            pq.put((dist[v], v))
+
     dist[(0, 0)] = 0
-    u = (0, 0)
+    pq.put((0, (0, 0)))
 
-    while q:
-        u = _find_min(q, dist)
-        q.remove(u)
+    while not pq.empty():
+        _, u = pq.get()
 
-        for drow, dcol in ((-1, 0), (0, 1), (1, 0), (0, -1)):
+        for drow, dcol in ((0, 1), (0, -1), (-1, 0), (1, 0)):
             nb = (u[0] + drow, u[1] + dcol)
-            if nb not in q:
+
+            if nb not in dist:
                 continue
 
             alt = dist[u] + grid[nb[0]][nb[1]]
@@ -42,6 +47,9 @@ def dijkstra(grid: Grid[int]) -> tuple[dict[Coord, int], dict[Coord, Coord]]:
             if alt < dist[nb]:
                 dist[nb] = alt
                 prev[nb] = u
+                pq.put((alt, nb))
+
+        visited.add(u)
 
     return dist, prev
 
@@ -63,29 +71,34 @@ def part1(input: Grid[int]) -> int:
     max_row = len(input) - 1
     max_col = len(input[0]) - 1
     target = (max_row, max_col)
-    path = extract_path(parents, (0, 0), target)
+    # path = extract_path(parents, (0, 0), target)
+    # _print_grid(input, set(path))
     return distances[target]
 
 
-def _find_min(
-    q: set[Coord],
-    dist: dict[Coord, int],
-) -> Coord:
-    min_dist = 1000000000000
-    min_v = None
-
-    for v in q:
-        if not v:
-            min_v = v
-        if dist[v] < min_dist:
-            min_v = v
-            min_dist = dist[v]
-
-    return min_v  # type: ignore
-
-
 def part2(input: Grid[int]) -> int:
-    return 0
+    large_grid = [row * 5 for row in input * 5]
+    tile_increase: dict[int, int] = {}
+    tile_size = len(input[0])
+
+    for tile in range(25):
+        increase = int(tile / 5) + tile % 5
+        tile_increase[tile] = increase
+
+    for i, row in enumerate(large_grid):
+        for j, col in enumerate(row):
+            r = i // tile_size
+            c = j // tile_size
+            tile = r * 5 + c
+            large_grid[i][j] = (large_grid[i][j] - 1 + tile_increase[tile]) % 9 + 1
+
+    distances, parents = dijkstra(large_grid)
+    max_row = len(large_grid) - 1
+    max_col = len(large_grid[0]) - 1
+    target = (max_row, max_col)
+    # path = extract_path(parents, (0, 0), target)
+    # _print_grid(input, set(path))
+    return distances[target]
 
 
 def parse(*, example: bool = False) -> Grid[int]:
